@@ -1,222 +1,503 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Tyler Brice | Cloud / DevOps Engineer Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Tyler Brice — Cloud Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tyler Brice — AWS Certified Cloud Practitioner. Hands-on cloud infrastructure, monitoring, and troubleshooting projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F7FA;
+    --panel:#FFFFFF;
+    --panel-tint:#F1F4F8;
+    --border:#DFE3EA;
+    --text:#1B2430;
+    --text-dim:#5B6472;
+    --text-faint:#8991A0;
+    --accent:#1D6F5C;
+    --accent-tint:#E4F2EE;
+    --warn:#9C6B15;
+    --warn-tint:#FBF1DE;
+    --link:#2B5FAD;
+    --radius:10px;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+  }
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-    }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation:none !important; transition:none !important;} }
 
-    header {
-      background: #020617;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #1e293b;
-    }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    header h1 {
-      margin: 0;
-      font-size: 32px;
-    }
+  a{color:var(--link); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 
-    header p {
-      margin: 5px 0;
-      color: #94a3b8;
-    }
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
+  /* ---------- Top status bar ---------- */
+  .statusbar{
+    background:var(--panel);
+    border-bottom:1px solid var(--border);
+  }
+  .statusbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 24px;
+    max-width:920px; margin:0 auto;
+    font-family:var(--mono); font-size:12.5px;
+    color:var(--text-dim);
+  }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:4px 10px;
+    border:1px solid var(--accent);
+    border-radius:999px;
+    color:var(--accent);
+    font-weight:600;
+    background:var(--accent-tint);
+  }
+  .status-dot{width:7px; height:7px; border-radius:50%; background:var(--accent);}
+  .statusbar-right{display:flex;}
+  .statusbar-right a, .statusbar-right span{color:var(--text-dim); margin-left:18px;}
+  .statusbar-right a:hover{color:var(--accent);}
 
-    .card {
-      background: #020617;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      border: 1px solid #1e293b;
-    }
+  /* ---------- Hero ---------- */
+  header.hero{
+    background:var(--panel);
+    border-bottom:1px solid var(--border);
+    padding:56px 0 40px;
+  }
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.06em;
+    color:var(--text-faint); text-transform:uppercase; margin:0 0 10px;
+  }
+  h1{
+    font-family:var(--sans); font-weight:700;
+    font-size:clamp(32px,5vw,44px);
+    margin:0 0 8px; letter-spacing:-0.01em;
+  }
+  .role-line{
+    font-family:var(--mono); font-size:15px; color:var(--text-dim);
+    margin:0 0 22px;
+  }
+  .role-line .arrow{color:var(--accent); font-weight:600;}
 
-    h2 {
-      border-bottom: 1px solid #1e293b;
-      padding-bottom: 5px;
-    }
+  .metrics-row{
+    display:flex; flex-wrap:wrap;
+    border:1px solid var(--border); border-radius:var(--radius);
+    overflow:hidden; margin-bottom:26px;
+  }
+  .metric{
+    background:var(--panel); padding:14px 16px; flex:1 1 0;
+    border-left:1px solid var(--border); min-width:140px;
+  }
+  .metric:first-child{border-left:none;}
+  .metric .num{font-family:var(--mono); font-weight:600; font-size:19px; color:var(--text);}
+  .metric .lbl{font-family:var(--mono); font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.04em; margin-top:3px;}
 
-    ul {
-      padding-left: 20px;
-    }
+  .hero-links{display:flex; flex-wrap:wrap; gap:10px;}
+  .btn{
+    font-family:var(--mono); font-size:13px; font-weight:500;
+    padding:9px 16px; border-radius:8px; border:1px solid var(--border);
+    color:var(--text); background:var(--panel-tint);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent); text-decoration:none;}
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .btn.primary:hover{background:#175947; color:#fff;}
 
-    .project {
-      margin-bottom: 15px;
-    }
+  @media (max-width:600px){ .metric{flex:1 1 45%; border-left:none; border-top:1px solid var(--border);} .metric:nth-child(-n+2){border-top:none;} }
 
-    a {
-      color: #38bdf8;
-      text-decoration: none;
-    }
+  /* ---------- Nav ---------- */
+  nav.subnav{
+    background:var(--panel-tint);
+    border-bottom:1px solid var(--border);
+    position:sticky; top:0; z-index:10;
+  }
+  nav.subnav .wrap{display:flex; gap:22px; padding:10px 24px; overflow-x:auto;}
+  nav.subnav a{
+    font-family:var(--mono); font-size:12.5px; color:var(--text-dim);
+    white-space:nowrap; padding:4px 2px; border-bottom:2px solid transparent;
+  }
+  nav.subnav a:hover{color:var(--accent); border-color:var(--accent); text-decoration:none;}
 
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  /* ---------- Sections ---------- */
+  section{padding:44px 0;}
+  section + section{border-top:1px solid var(--border);}
+  .section-head{display:flex; align-items:baseline; gap:10px; margin-bottom:20px;}
+  .section-head .tag{font-family:var(--mono); font-size:11px; color:var(--text-faint);}
+  h2{font-size:21px; margin:0; font-weight:700;}
+
+  .lede{max-width:680px; color:var(--text-dim); font-size:15.5px;}
+
+  /* ---------- Skills ---------- */
+  .skill-group{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:16px 18px; margin-bottom:12px;
+  }
+  .skill-group-title{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12.5px; font-weight:600;
+    color:var(--text); text-transform:uppercase; letter-spacing:.03em;
+    margin-bottom:9px;
+  }
+  .skill-group-title .dot{width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:7px;}
+  .chip{
+    font-family:var(--mono); font-size:12.5px;
+    background:var(--panel-tint); border:1px solid var(--border);
+    padding:4px 9px; border-radius:6px; color:var(--text-dim);
+  }
+  .chip-row.learning .chip{background:var(--warn-tint); border-color:#EED9A8; color:var(--warn);}
+
+  /* ---------- Projects ---------- */
+  .project-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:20px 22px; margin-bottom:16px;
+  }
+  .project-top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+  .project-top h3{margin:0; font-size:17px;}
+  .badge{
+    font-family:var(--mono); font-size:11px; font-weight:600;
+    padding:3px 9px; border-radius:999px; white-space:nowrap;
+    background:var(--accent-tint); color:var(--accent); border:1px solid #BEE1D6;
+  }
+  .stack-line{font-family:var(--mono); font-size:12px; color:var(--text-faint); margin:6px 0 12px;}
+  .project-card p{margin:0 0 12px; color:var(--text-dim); font-size:14.5px;}
+  .project-links{display:flex; gap:14px; font-family:var(--mono); font-size:12.5px;}
+
+  /* ---------- Experience ---------- */
+  .job{
+    border-left:2px solid var(--border);
+    padding:2px 0 22px 22px; margin-left:4px; position:relative;
+  }
+  .job::before{
+    content:''; position:absolute; left:-6px; top:6px;
+    width:10px; height:10px; border-radius:50%;
+    background:var(--panel); border:2px solid var(--accent);
+  }
+  .job:last-child{padding-bottom:2px;}
+  .job-date{font-family:var(--mono); font-size:11.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.03em;}
+  .job h3{margin:4px 0 1px; font-size:16.5px;}
+  .job .company{color:var(--text-dim); font-size:13.5px; margin-bottom:10px;}
+  .job ul{margin:0; padding-left:18px; color:var(--text-dim); font-size:14.5px;}
+  .job li{margin-bottom:6px;}
+
+  /* ---------- Certifications ---------- */
+  .cert-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:600px){ .cert-grid{grid-template-columns:1fr;} }
+  .cert-card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .cert-card .name{font-size:14px; font-weight:500;}
+  .cert-card .sub{font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-top:2px;}
+  .badge.warn{background:var(--warn-tint); color:var(--warn); border-color:#EED9A8;}
+  .track-list{list-style:none; padding:0; margin:6px 0 0; font-family:var(--mono); font-size:12.5px; color:var(--text-faint);}
+  .track-list li{margin-bottom:5px; padding-left:16px; position:relative;}
+  .track-list li::before{content:'—'; position:absolute; left:0; color:var(--text-faint);}
+
+  /* ---------- Interests ---------- */
+  .pill-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .pill{
+    font-family:var(--mono); font-size:12.5px;
+    border:1px solid var(--border); background:var(--panel);
+    padding:6px 12px; border-radius:999px; color:var(--text-dim);
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--panel); border-top:1px solid var(--border);
+    padding:30px 0 40px; text-align:center;
+  }
+  footer .name{font-family:var(--mono); font-weight:600; margin-bottom:4px;}
+  footer .flinks{display:flex; justify-content:center; font-family:var(--mono); font-size:13px; margin-top:10px;}
+  footer .flinks a{margin:0 8px;}
+</style>
 </head>
-
 <body>
 
-<header>
-  <h1>Tyler Brice</h1>
-  <p><strong>AWS Certified Cloud Practitioner | Cloud / DevOps Engineer</strong></p>
+<div class="statusbar">
+  <div class="statusbar-inner">
+    <span class="status-pill"><span class="status-dot"></span>OPEN TO WORK</span>
+    <div class="statusbar-right">
+      <a href="mailto:tylertbrice12@gmail.com">tylertbrice12@gmail.com</a>
+      <a href="tel:5712985011">571-298-5011</a>
+      <span>Woodbridge, VA</span>
+    </div>
+  </div>
+</div>
 
-<p>
-Hands-on experience building and monitoring AWS cloud infrastructure using EC2, S3, CloudFront, CloudWatch, SNS, IAM, and DynamoDB.
-</p>
-  <p>
-    <a href="#projects">View Projects</a> |
-    <a href="https://github.com/tylertbrice12-hue" target="_blank">GitHub</a> |
-    <a href="https://www.linkedin.com/in/tyler-brice007/" target="_blank">LinkedIn</a>
-  </p>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Cloud Portfolio</p>
+    <h1>Tyler Brice</h1>
+    <p class="role-line">AWS Certified Cloud Practitioner &nbsp;·&nbsp; Cloud Support/Operations <span class="arrow">→</span> Cloud Engineering</p>
 
-  <p>Email: <a href="mailto:tylertbrice12@gmail.com">tylertbrice12@gmail.com</a></p>
+    <div class="metrics-row">
+      <div class="metric"><div class="num">1 / 1</div><div class="lbl">Certs earned / in progress</div></div>
+      <div class="metric"><div class="num">2</div><div class="lbl">Projects deployed</div></div>
+      <div class="metric"><div class="num">12</div><div class="lbl">AWS services, hands-on</div></div>
+      <div class="metric"><div class="num">HC → Cloud</div><div class="lbl">Career track</div></div>
+    </div>
+
+    <div class="hero-links">
+      <a class="btn primary" href="#projects">View Projects</a>
+      <a class="btn" href="https://github.com/tylertbrice12-hue" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/tyler-brice007/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="mailto:tylertbrice12@gmail.com">Email Me</a>
+    </div>
+  </div>
 </header>
 
-<div class="container">
-
-  <div class="card">
-    <h2>About Me</h2>
-<p>
-AWS Certified Cloud Practitioner with hands-on experience building and monitoring AWS environments using EC2, S3, CloudFront, CloudWatch, SNS, IAM, and DynamoDB. I focus on cloud infrastructure, monitoring, troubleshooting, and operational support while building practical AWS projects.
-
-I bring a background in healthcare operations where I developed strong problem-solving, communication, documentation, and operational support skills in fast-paced environments. I am currently expanding my knowledge of Linux, networking, Python automation, cloud security, Infrastructure as Code (IaC), and DevOps practices while pursuing the AWS Certified Solutions Architect – Associate certification.
-</p>
+<nav class="subnav">
+  <div class="wrap">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#certifications">Certifications</a>
   </div>
+</nav>
 
-  <div class="card">
-    <h2>Technical Skills</h2>
-   <ul>
-  <li><strong>Cloud Platforms & Services:</strong> AWS (EC2, S3, CloudFront, CloudWatch, SNS, IAM, DynamoDB, VPC)</li>
-
-  <li><strong>Networking & Security:</strong> VPC Concepts, Subnets, Route Tables, Security Groups, IAM, Least-Privilege Access, Cloud Security Fundamentals</li>
-
-  <li><strong>Monitoring & Observability:</strong> CloudWatch Metrics, CloudWatch Alarms, SNS Notifications, Infrastructure Monitoring, Incident Detection</li>
-
-  <li><strong>Storage:</strong> Amazon S3, S3 Glacier, Amazon EBS (Foundational), EFS, Storage Gateway, Snow Family</li>
-
-  <li><strong>Compute & Serverless:</strong> Amazon EC2, AWS Lambda (Foundational), Fargate, EventBridge, Lightsail</li>
-
-  <li><strong>Operating Systems:</strong> Linux (Foundational), Windows</li>
-
-  <li><strong>Programming & Automation:</strong> Python (Beginner), Bash/Linux Command Line (Foundational)</li>
-
-  <li><strong>Tools:</strong> GitHub, VS Code</li>
-
-  <li><strong>Cloud & DevOps Concepts:</strong> Cloud Infrastructure, Monitoring & Alerting, CI/CD Fundamentals, Infrastructure as Code Concepts (CloudFormation), Troubleshooting & Operational Support</li>
-</ul>
-  </div>
-
-  <div class="card">
-    <h2>Projects</h2>
-
-    <div class="project">
-  <h3>AWS Static Website Deployment</h3>
-  <p><strong>Architecture:</strong> S3, CloudFront, IAM</p>
-
-  <ul>
-  <li>Built and deployed a static website using Amazon S3 and CloudFront for secure global content delivery</li>
-
-  <li>Configured S3 bucket policies, permissions, and website hosting settings</li>
-
-  <li>Implemented CloudFront caching and content delivery optimization</li>
-
-  <li>Applied IAM access controls and security best practices</li>
-
-  <li>Troubleshot deployment, routing, and access-related issues</li>
-
-  <li>Applied scalability, availability, and CDN performance optimization concepts</li>
-</ul>
-
-  <p>
-    <a href="https://d128r20xpbuxt8.cloudfront.net/" target="_blank">Live Demo</a> |
-    <a href="https://github.com/tylertbrice12-hue" target="_blank">GitHub</a>
-  </p>
-</div>
-    <div class="project">
-  <h3>Cloud Monitoring & Alerting (EC2 + CloudWatch)</h3>
-  <p><strong>Architecture:</strong> EC2, CloudWatch, SNS</p>
-
-  <ul>
-  <li>Provisioned and monitored an EC2 instance using CloudWatch metrics and alarms</li>
-
-  <li>Simulated CPU workload to analyze system performance and identify anomalies</li>
-
-  <li>Configured CloudWatch alarms using threshold-based monitoring</li>
-
-  <li>Integrated SNS notifications to support automated alerting workflows</li>
-
-  <li>Documented monitoring configurations and troubleshooting procedures</li>
-
-  <li>Applied observability and incident detection concepts commonly used in cloud operations</li>
-</ul>
-</div>
-    <div class="card">
-  <h2>What I'm Learning</h2>
-  <ul>
-  <li>AWS Certified Solutions Architect – Associate</li>
-
-  <li>Linux Administration & System Fundamentals</li>
-
-  <li>Python Automation</li>
-
-  <li>Infrastructure as Code (CloudFormation & Terraform)</li>
-
-  <li>CI/CD Concepts & DevOps Practices</li>
-
-  <li>Docker Fundamentals</li>
-
-  <li>Cloud Networking & Security</li>
-</ul>
-</div>
-  <div class="card">
-    <h2>Certifications</h2>
-<ul>
-  <li>AWS Certified Cloud Practitioner – Earned June 2026</li>
-
-  <li>AWS Cloud Quest: Cloud Practitioner Badge</li>
-
-  <li>AWS Cloud Practitioner Essentials</li>
-
-  <li>AWS Certified Solutions Architect – Associate (In Progress)</li>
-</ul>
-  </div>
-
-    <div class="card">
-  <h2>Career Interests</h2>
-
-  <ul>
-    <li>Cloud Engineering</li>
-    <li>DevOps Engineering</li>
-    <li>Cloud Operations</li>
-    <li>Site Reliability Engineering (SRE)</li>
-    <li>Cloud Security</li>
-    <li>Infrastructure Automation</li>
-  </ul>
-</div>
-
-  <div class="card">
-    <h2>Links</h2>
-    <p>
-      <a href="https://github.com/tylertbrice12-hue" target="_blank">GitHub</a> |
-      <a href="https://www.linkedin.com/in/tyler-brice007/" target="_blank">LinkedIn</a>
+<section id="about">
+  <div class="wrap">
+    <div class="section-head"><span class="tag">01</span><h2>About</h2></div>
+    <p class="lede">
+      I'm an AWS Certified Cloud Practitioner with hands-on experience across EC2, S3, CloudFront, CloudWatch,
+      IAM, SNS, VPC, RDS, DynamoDB, and EFS — built through self-directed projects and structured labs, not
+      coursework alone. On my monitoring project, I configured a CloudWatch alarm to trigger at 50% CPU
+      utilization during a simulated workload spike, and confirmed the SNS notification landed in about
+      3 minutes. That's the kind of monitoring-to-alert pipeline I want to keep building.
+    </p>
+    <p class="lede" style="margin-top:14px;">
+      Before cloud, I spent several years in healthcare operations, diagnosing and escalating technical
+      system failures under pressure. I troubleshot EHR connectivity issues, triaged problems by severity,
+      and documented fixes for teams who depended on the systems staying up. Moving into cloud operations
+      felt less like starting over and more like applying the same instinct to different infrastructure.
+    </p>
+    <p class="lede" style="margin-top:14px;">
+      I'm currently studying for the AWS Solutions Architect – Associate certification and building toward
+      Cloud Support, Cloud Operations, DevOps Support, and Site Reliability roles.
     </p>
   </div>
+</section>
 
-</div>
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head"><span class="tag">02</span><h2>Technical Skills</h2></div>
+
+    <div class="skill-group">
+      <div class="skill-group-title"><span class="dot"></span>Cloud Operations &amp; Infrastructure Support</div>
+      <div class="chip-row">
+        <span class="chip">AWS CLI</span><span class="chip">SSH</span><span class="chip">Virtual Machines</span>
+        <span class="chip">Log Analysis</span><span class="chip">Root Cause Analysis</span>
+        <span class="chip">Runbook Development</span><span class="chip">Cloud Security Fundamentals</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title"><span class="dot"></span>Networking &amp; Security</div>
+      <div class="chip-row">
+        <span class="chip">VPC</span><span class="chip">VPC Peering</span><span class="chip">Security Groups</span>
+        <span class="chip">Subnets</span><span class="chip">Route Tables</span><span class="chip">DNS</span>
+        <span class="chip">TCP/IP</span><span class="chip">IAM</span><span class="chip">MFA</span>
+        <span class="chip">Least Privilege Access</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title"><span class="dot"></span>Monitoring &amp; Observability</div>
+      <div class="chip-row">
+        <span class="chip">CloudWatch Metrics</span><span class="chip">CloudWatch Alarms</span>
+        <span class="chip">SNS Notifications</span><span class="chip">Infrastructure Monitoring</span>
+        <span class="chip">Incident Response Workflows</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title"><span class="dot"></span>Compute, Storage &amp; Databases</div>
+      <div class="chip-row">
+        <span class="chip">EC2</span><span class="chip">EC2 Auto Scaling</span><span class="chip">EBS</span>
+        <span class="chip">S3</span><span class="chip">CloudFront</span><span class="chip">EFS</span>
+        <span class="chip">DynamoDB</span><span class="chip">RDS (Multi-AZ)</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title"><span class="dot"></span>DevOps, Documentation &amp; Tools</div>
+      <div class="chip-row">
+        <span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">CloudFormation</span>
+        <span class="chip">Infrastructure as Code</span><span class="chip">CI/CD Fundamentals</span>
+        <span class="chip">Technical Documentation</span><span class="chip">Ticket Management</span>
+        <span class="chip">VS Code</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title"><span class="dot" style="background:var(--warn);"></span>Currently Learning</div>
+      <div class="chip-row learning">
+        <span class="chip">Python</span><span class="chip">Bash Scripting</span>
+        <span class="chip">Docker &amp; Kubernetes (conceptual)</span><span class="chip">Terraform</span>
+        <span class="chip">Lambda</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head"><span class="tag">03</span><h2>Projects</h2></div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <h3>AWS Static Website Deployment &amp; CDN Delivery</h3>
+        <span class="badge">ENABLED</span>
+      </div>
+      <div class="stack-line">S3 · CloudFront · IAM</div>
+      <p>
+        Built and deployed this static portfolio using Amazon S3 and CloudFront, with IAM users, roles, and
+        least-privilege access policies to keep resources secure. Hit a deployment issue where the site
+        wouldn't render — traced it to an incorrect file extension on the index file, caused by how it saved
+        when uploading from GitHub. Fixed the naming and redeployed, landing on a fully Enabled distribution
+        with HTTPS delivery. Documented the process so the steps are repeatable.
+      </p>
+      <div class="project-links">
+        <a href="https://d128r20xpbuxt8.cloudfront.net/" target="_blank" rel="noopener">Live Demo →</a>
+        <a href="https://github.com/tylertbrice12-hue/aws-static-website-project/tree/main" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <h3>Cloud Infrastructure Monitoring &amp; Alerting</h3>
+        <span class="badge">ALARM TESTED: OK</span>
+      </div>
+      <div class="stack-line">EC2 · CloudWatch · SNS</div>
+      <p>
+        Provisioned an EC2 instance and set up CloudWatch monitoring, alarms, and SNS notifications to mirror
+        how production monitoring and incident response actually work. Configured an alarm to trigger at 50%
+        CPU utilization, then simulated a workload spike to test it — the SNS email notification landed about
+        3 minutes after the threshold was crossed, confirming the alerting pipeline worked end to end.
+        Documented the monitoring setup, thresholds, and troubleshooting steps for reference.
+      </p>
+      <div class="project-links">
+        <a href="https://github.com/tylertbrice12-hue/ec2-monitoring-alerting-project/tree/main" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head"><span class="tag">04</span><h2>Experience</h2></div>
+
+    <div class="job">
+      <div class="job-date">Feb 2025 — Present</div>
+      <h3>Medical Assistant</h3>
+      <div class="company">Patient First Urgent &amp; Primary Care</div>
+      <ul>
+        <li>Troubleshoot recurring issues with PAS, a proprietary EHR system — document upload failures, printer connectivity — resolving most independently before escalating via IT ticket.</li>
+        <li>Diagnose data connectivity issues between diagnostic equipment (EKG, Audiometer) and PAS, including wiring misconfigurations and failed result transfers.</li>
+        <li>Maintain continuity during system outages through manual workflows and detailed technical tickets.</li>
+        <li>Run daily equipment configuration, calibration, and checklist-based functional checks.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-date">Feb 2024 — Jan 2025</div>
+      <h3>Brand Development Manager | Medical Assistant | Receptionist</h3>
+      <div class="company">AFC Urgent Care</div>
+      <ul>
+        <li>Resolved recurring Experity system issues, including scanner malfunctions and insurance verification errors.</li>
+        <li>Ran the lab: daily quality control on equipment, troubleshooting issues before formal work orders.</li>
+        <li>Led I-693 immigration documentation, ensuring precise recording of sensitive information prior to sealing.</li>
+        <li>Built and maintained an Excel-based inventory and outreach tracking system; led email campaigns.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-date">Nov 2022 — Jan 2024</div>
+      <h3>Facilitator</h3>
+      <div class="company">Medical Center Radiologist (MCR)</div>
+      <ul>
+        <li>Triaged PACs communication system issues between facility staff and Radiologists by severity, escalating unresolved cases via formal ticketing.</li>
+        <li>Troubleshot recurring computer-to-printer connectivity failures, including for time-sensitive Code Red documentation.</li>
+        <li>Performed data entry and reporting in Excel, maintaining accuracy across operational and patient records.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-date">Jul 2021 — Aug 2022</div>
+      <h3>Health Administrator — Team Lead</h3>
+      <div class="company">Impact Health</div>
+      <ul>
+        <li>Led a team through COVID testing and biometric screening, training staff on procedures and equipment troubleshooting.</li>
+        <li>Diagnosed SOFIA testing equipment issues — barcode failures, inconclusive results, connectivity drops — isolating equipment vs. product root cause.</li>
+        <li>Caught data entry errors before they reached a patient's official record, coordinating retesting when needed.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap">
+    <div class="section-head"><span class="tag">05</span><h2>Certifications &amp; Training</h2></div>
+
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div>
+          <div class="name">AWS Certified Cloud Practitioner</div>
+          <div class="sub">Issued June 2026</div>
+        </div>
+        <span class="badge">PASSED</span>
+      </div>
+      <div class="cert-card">
+        <div>
+          <div class="name">AWS Solutions Architect – Associate</div>
+          <div class="sub">In progress</div>
+        </div>
+        <span class="badge warn">IN PROGRESS</span>
+      </div>
+    </div>
+
+    <ul class="track-list">
+      <li>AWS Cloud Quest: Cloud Practitioner (Training)</li>
+      <li>AWS Cloud Practitioner Essentials (Training)</li>
+    </ul>
+
+    <div class="section-head" style="margin-top:34px;"><span class="tag">06</span><h2>Target Roles</h2></div>
+    <div class="pill-row">
+      <span class="pill">Cloud Support</span>
+      <span class="pill">Cloud Operations</span>
+      <span class="pill">DevOps Support</span>
+      <span class="pill">Site Reliability</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="name">Tyler Brice</div>
+    <div style="font-family:var(--mono); font-size:12.5px; color:var(--text-faint);">tylertbrice12@gmail.com · Woodbridge, VA</div>
+    <div class="flinks">
+      <a href="https://github.com/tylertbrice12-hue" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/tyler-brice007/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:tylertbrice12@gmail.com">Email</a>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
-
